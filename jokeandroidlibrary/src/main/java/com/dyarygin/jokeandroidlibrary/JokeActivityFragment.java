@@ -1,11 +1,14 @@
 package com.dyarygin.jokeandroidlibrary;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Pair;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import com.dmitry.JokeTeller;
 
 import com.dmitry.JokeTeller;
 
@@ -24,6 +27,7 @@ public class JokeActivityFragment extends Fragment {
         TextView jokeTextView = (TextView)view.findViewById(R.id.displayTextView);
         JokeTeller jt = new JokeTeller();
         jokeTextView.setText(jt.tellJokes());
+
         return view;
     }
 }
