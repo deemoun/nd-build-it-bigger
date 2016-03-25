@@ -7,6 +7,7 @@ import android.util.Pair;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
@@ -15,7 +16,8 @@ import com.google.android.gms.ads.AdView;
 /**
  * A placeholder fragment containing a simple view.
  */
-public class MainActivityFragment extends Fragment {
+public class MainActivityFragment extends Fragment implements SyncInterface {
+    EndpointsAsyncTask endpointsAsyncTask = new EndpointsAsyncTask();
 
     public MainActivityFragment() {
     }
@@ -33,7 +35,15 @@ public class MainActivityFragment extends Fragment {
                 .addTestDevice(AdRequest.DEVICE_ID_EMULATOR)
                 .build();
         mAdView.loadAd(adRequest);
-        new EndpointsAsyncTask().execute();
+
+        // Passing a listener from EndpointsAsyncTask
+        endpointsAsyncTask.listener = this;
+        endpointsAsyncTask.execute();
         return root;
+    }
+
+    @Override
+    public void onTaskCompleted(String result) {
+        Toast.makeText(getContext(), result, Toast.LENGTH_LONG).show();
     }
 }

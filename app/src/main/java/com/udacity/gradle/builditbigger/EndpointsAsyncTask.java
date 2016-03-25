@@ -11,12 +11,13 @@ import com.google.api.client.extensions.android.json.AndroidJsonFactory;
 
 import java.io.IOException;
 
-class EndpointsAsyncTask extends AsyncTask<Pair<Context, String>, Void, String> {
+class EndpointsAsyncTask extends AsyncTask<String,Void, String> {
     private static MyApi myApiService = null;
-    private Context context;
+    public SyncInterface listener;
+
 
     @Override
-    protected String doInBackground(Pair<Context, String>... params) {
+    protected String doInBackground(String... params) {
         if(myApiService == null) {  // Only do this once
             MyApi.Builder builder = new MyApi.Builder(AndroidHttp.newCompatibleTransport(), new AndroidJsonFactory(), null)
                     .setRootUrl("https://dy-builditbigger.appspot.com/_ah/api/");
@@ -24,9 +25,6 @@ class EndpointsAsyncTask extends AsyncTask<Pair<Context, String>, Void, String> 
 
             myApiService = builder.build();
         }
-
-        context = params[0].first;
-        String name = params[0].second;
 
         try {
             return myApiService.tellJoke().execute().getData();
@@ -37,6 +35,6 @@ class EndpointsAsyncTask extends AsyncTask<Pair<Context, String>, Void, String> 
 
     @Override
     protected void onPostExecute(String result) {
-        Toast.makeText(context, result, Toast.LENGTH_LONG).show();
+        listener.onTaskCompleted(result);
     }
 }
