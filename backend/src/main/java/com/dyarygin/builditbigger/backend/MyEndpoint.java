@@ -35,10 +35,10 @@ public class MyEndpoint {
 
     @ApiMethod(name = "tellJoke")
     public MyBean tellJoke() {
-        MyBean response = new MyBean();
-        response.setData("Hello. Nice to meet you!");
+        MyBean jokeTeller = new MyBean();
+        jokeTeller.setData(jokeTeller.getData());
 
-        return response;
+        return jokeTeller;
     }
 
 

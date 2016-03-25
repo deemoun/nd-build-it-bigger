@@ -50,6 +50,8 @@ public class MainActivity extends ActionBarActivity {
 
     public void launchLibraryActivity(View view){
         Intent myIntent = new Intent(this, JokeActivity.class);
+        JokeTeller jk = new JokeTeller();
+        myIntent.putExtra("joke", jk.tellJokes());
         startActivity(myIntent);
     }
 }

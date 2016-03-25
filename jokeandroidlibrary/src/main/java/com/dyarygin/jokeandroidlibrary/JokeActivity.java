@@ -1,5 +1,6 @@
 package com.dyarygin.jokeandroidlibrary;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
@@ -33,5 +34,10 @@ public class JokeActivity extends AppCompatActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    public String getIntentString() {
+        Intent i = getIntent();
+        return i.getStringExtra("joke");
     }
 }

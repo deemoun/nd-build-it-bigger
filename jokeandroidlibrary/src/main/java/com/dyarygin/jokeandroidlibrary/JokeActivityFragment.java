@@ -8,9 +8,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import com.dmitry.JokeTeller;
-
-import com.dmitry.JokeTeller;
 
 /**
  * A placeholder fragment containing a simple view.
@@ -25,8 +22,10 @@ public class JokeActivityFragment extends Fragment {
                              Bundle savedInstanceState) {
         View  view = inflater.inflate(R.layout.fragment_joke, container, false);
         TextView jokeTextView = (TextView)view.findViewById(R.id.displayTextView);
-        JokeTeller jt = new JokeTeller();
-        jokeTextView.setText(jt.tellJokes());
+
+        JokeActivity jokeActivity = (JokeActivity) getActivity();
+        String jokeData = jokeActivity.getIntentString();
+        jokeTextView.setText(jokeData);
 
         return view;
     }
