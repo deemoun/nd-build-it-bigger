@@ -1,13 +1,10 @@
 package com.udacity.gradle.builditbigger;
 
-import android.content.Context;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
-import android.util.Pair;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
@@ -16,8 +13,7 @@ import com.google.android.gms.ads.AdView;
 /**
  * A placeholder fragment containing a simple view.
  */
-public class MainActivityFragment extends Fragment implements SyncInterface {
-    EndpointsAsyncTask endpointsAsyncTask = new EndpointsAsyncTask();
+public class MainActivityFragment extends Fragment {
 
     public MainActivityFragment() {
     }
@@ -36,14 +32,6 @@ public class MainActivityFragment extends Fragment implements SyncInterface {
                 .build();
         mAdView.loadAd(adRequest);
 
-        // Passing a listener from EndpointsAsyncTask
-        endpointsAsyncTask.listener = this;
-        endpointsAsyncTask.execute();
         return root;
-    }
-
-    @Override
-    public void onTaskCompleted(String result) {
-        Toast.makeText(getContext(), result, Toast.LENGTH_LONG).show();
     }
 }

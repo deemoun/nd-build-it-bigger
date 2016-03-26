@@ -12,12 +12,21 @@ import com.dmitry.JokeTeller;
 import com.dyarygin.jokeandroidlibrary.JokeActivity;
 
 
-public class MainActivity extends ActionBarActivity {
+public class MainActivity extends ActionBarActivity implements SyncInterface {
+
+    EndpointsAsyncTask endpointsAsyncTask = new EndpointsAsyncTask();
+    public String jokeForIntent;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        jokeForIntent = null;
+
+        // Passing a listener from EndpointsAsyncTask
+        endpointsAsyncTask.listener = this;
+        endpointsAsyncTask.execute();
     }
 
 
@@ -50,8 +59,16 @@ public class MainActivity extends ActionBarActivity {
 
     public void launchLibraryActivity(View view){
         Intent myIntent = new Intent(this, JokeActivity.class);
-        JokeTeller jk = new JokeTeller();
-        myIntent.putExtra("joke", jk.tellJokes());
-        startActivity(myIntent);
+        if (jokeForIntent != null) {
+            myIntent.putExtra("joke", jokeForIntent);
+            startActivity(myIntent);
+        } else {
+            // Some handling
+        }
+    }
+
+    @Override
+    public void onTaskCompleted(String result) {
+        jokeForIntent = result;
     }
 }
