@@ -1,6 +1,7 @@
 package com.udacity.gradle.builditbigger;
 
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
@@ -14,19 +15,43 @@ import com.dyarygin.jokeandroidlibrary.JokeActivity;
 
 public class MainActivity extends ActionBarActivity implements SyncInterface {
 
-    EndpointsAsyncTask endpointsAsyncTask = new EndpointsAsyncTask();
     public String jokeForIntent;
+    EndpointsAsyncTask endpointsAsyncTask;
+
+
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+
+        jokeForIntent = null;
+        EndpointsAsyncTask endpointsAsyncTask = new EndpointsAsyncTask();
+
+        if (endpointsAsyncTask.getStatus() == AsyncTask.Status.FINISHED){
+
+            // If AsyncTask already executed, clear everything
+            endpointsAsyncTask = null;
+            try {
+                endpointsAsyncTask.listener = null;
+                endpointsAsyncTask.execute();
+            } catch (NullPointerException e){
+                System.out.println("NPE exception " + e.getLocalizedMessage());
+            }
+        } else {
+            endpointsAsyncTask.listener = this;
+            endpointsAsyncTask.execute();
+        }
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-        jokeForIntent = null;
-
-        // Passing a listener from EndpointsAsyncTask
-        endpointsAsyncTask.listener = this;
-        endpointsAsyncTask.execute();
     }
 
 
@@ -58,17 +83,24 @@ public class MainActivity extends ActionBarActivity implements SyncInterface {
     }
 
     public void launchLibraryActivity(View view){
+
+
         Intent myIntent = new Intent(this, JokeActivity.class);
         if (jokeForIntent != null) {
             myIntent.putExtra("joke", jokeForIntent);
             startActivity(myIntent);
         } else {
-            // Some handling
+            System.out.print("Nothing to send in Intent");
         }
     }
 
+
     @Override
     public void onTaskCompleted(String result) {
-        jokeForIntent = result;
+        if(result != null) {
+            jokeForIntent = result;
+        } else {
+            System.out.print("Result is null! Was AsyncTask executed?");
+        }
     }
 }
