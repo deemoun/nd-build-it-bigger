@@ -35,10 +35,11 @@ class EndpointsAsyncTask extends AsyncTask<String,Void, String> {
 
     @Override
     protected void onPostExecute(String result) {
+
         if (!result.endsWith("hostname")) {
             listener.onTaskCompleted(result);
         } else {
-            listener.onTaskCompleted("No internet connection!");
+            listener.onTaskCompleted("No internet Connection!");
         }
     }
 }

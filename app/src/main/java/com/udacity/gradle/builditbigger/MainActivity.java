@@ -12,6 +12,10 @@ import android.widget.Toast;
 import com.dmitry.JokeTeller;
 import com.dyarygin.jokeandroidlibrary.JokeActivity;
 
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.TimeUnit;
+import java.util.concurrent.TimeoutException;
+
 
 public class MainActivity extends ActionBarActivity implements SyncInterface {
 
@@ -30,7 +34,7 @@ public class MainActivity extends ActionBarActivity implements SyncInterface {
         super.onStart();
 
         jokeForIntent = null;
-        EndpointsAsyncTask endpointsAsyncTask = new EndpointsAsyncTask();
+        endpointsAsyncTask = new EndpointsAsyncTask();
 
         if (endpointsAsyncTask.getStatus() == AsyncTask.Status.FINISHED){
 
@@ -51,7 +55,9 @@ public class MainActivity extends ActionBarActivity implements SyncInterface {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.activity_main);
+
     }
 
 
@@ -83,14 +89,12 @@ public class MainActivity extends ActionBarActivity implements SyncInterface {
     }
 
     public void launchLibraryActivity(View view){
-
-
         Intent myIntent = new Intent(this, JokeActivity.class);
         if (jokeForIntent != null) {
             myIntent.putExtra("joke", jokeForIntent);
             startActivity(myIntent);
         } else {
-            System.out.print("Nothing to send in Intent");
+            System.out.println("Nothing to send in Intent!");
         }
     }
 
@@ -100,7 +104,7 @@ public class MainActivity extends ActionBarActivity implements SyncInterface {
         if(result != null) {
             jokeForIntent = result;
         } else {
-            System.out.print("Result is null! Was AsyncTask executed?");
+            System.out.println("Result is null! Was AsyncTask executed?");
         }
     }
 }
