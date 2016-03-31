@@ -3,11 +3,9 @@ apply plugin: 'com.android.application'
 android {
     compileSdkVersion 23
     buildToolsVersion '23.0.2'
-
     dexOptions {
         javaMaxHeapSize "4g"
     }
-
     defaultConfig {
         applicationId "com.udacity.gradle.builditbigger"
         minSdkVersion 17
@@ -22,8 +20,23 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+    productFlavors {
+        free {
+            minSdkVersion 17
+            applicationId 'com.udacity.gradle.builditbigger.free'
+            targetSdkVersion 23
+            versionCode 1
+            versionName '1.0'
+        }
+        paid {
+            minSdkVersion 17
+            applicationId 'com.udacity.gradle.builditbigger.paid'
+            targetSdkVersion 23
+            versionCode 1
+            versionName '1.0'
+        }
+    }
 }
-
 
 dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
