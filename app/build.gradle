@@ -22,18 +22,10 @@ android {
     }
     productFlavors {
         free {
-            minSdkVersion 17
             applicationId 'com.udacity.gradle.builditbigger.free'
-            targetSdkVersion 23
-            versionCode 1
-            versionName '1.0'
         }
         paid {
-            minSdkVersion 17
             applicationId 'com.udacity.gradle.builditbigger.paid'
-            targetSdkVersion 23
-            versionCode 1
-            versionName '1.0'
         }
     }
 }
