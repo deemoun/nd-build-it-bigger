@@ -12,10 +12,6 @@ import android.widget.Toast;
 import com.dmitry.JokeTeller;
 import com.dyarygin.jokeandroidlibrary.JokeActivity;
 
-import java.util.concurrent.ExecutionException;
-import java.util.concurrent.TimeUnit;
-import java.util.concurrent.TimeoutException;
-
 
 public class MainActivity extends ActionBarActivity implements SyncInterface {
 
